@@ -8,7 +8,8 @@ require 'open-uri'
 require 'date'
 require 'selenium-webdriver'
 require 'dotenv'
-Dotenv.load
+require 'oauth2'
+Dotenv.load('.env')
 
 def scrape_posts
   # scrape the linkedin page
@@ -60,13 +61,60 @@ end
 
 require 'net/http'
 require 'uri'
+# def test_twitter_access
+#   uri = URI('https://api.twitter.com/2/tweets/search/recent?query=from:twitterdev')  # replace with your URL
+#   http = Net::HTTP.new(uri.host, uri.port)
 
-uri = URI('https://api.twitter.com/2/tweets/search/recent?query=from:twitterdev')  # replace with your URL
-http = Net::HTTP.new(uri.host, uri.port)
+#   request = Net::HTTP::Get.new(uri.request_uri)
+#   request['Authorization'] = "Bearer #{ENV['BEARER_TOKEN']}"
 
-request = Net::HTTP::Get.new(uri.request_uri)
-request['Authorization'] = "Bearer #{ENV['BEARER_TOKEN']}"
+#   response = http.request(request)
 
-response = http.request(request)
+#   puts response.body
+# end
+# test_twitter_access
 
-puts response.body
+def test_linkedin_access
+  client_id = ENV['LINKEDIN_CLIENT_ID']
+  client_secret = ENV['LINKEDIN_CLIENT_SECRET']
+
+  client = OAuth2::Client.new(client_id, client_secret, site: 'https://www.linkedin.com')
+  auth_url = client.auth_code.authorize_url(redirect_uri: 'http://localhost:3000/oauth2/callback')
+
+  puts "Open the following URL in your browser and authorize the app, then enter the code you get back: #{auth_url}"
+
+  print "Enter the code you received: "
+  code = gets.chomp
+
+  access_token = client.auth_code.get_token(code, redirect_uri: 'http://localhost:3000/oauth2/callback')
+
+  puts "Your access token is: #{access_token.token}"
+end
+# test_linkedin_access
+
+require 'net/http'
+require 'uri'
+require 'json'
+
+def search_tweets(user, word, bearer_token)
+  base_url = 'https://api.twitter.com/2/tweets/search/recent'
+  query = URI.encode_www_form('query' => "from:#{user} #{word}")
+  url = URI("#{base_url}?#{query}")
+  require 'pry'; binding.pry
+  request = Net::HTTP::Get.new(url)
+  request['Authorization'] = "Bearer #{bearer_token}"
+  
+  response = Net::HTTP.start(url.hostname, url.port, use_ssl: url.scheme == 'https') do |http|
+    http.request(request)
+  end
+
+  JSON.parse(response.body)
+end
+
+bearer_token = ENV['TWITTER_BEARER_TOKEN']
+user = 'Deloitte'
+word = 'data'
+
+tweets = search_tweets(user, word, bearer_token)
+
+puts tweets
