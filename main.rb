@@ -57,3 +57,16 @@ end
 # api_key = ENV['API_KEY']
 # api_key_secret = ENV['API_KEY_SECRET']
 # bearer_token = ENV['BEARER_TOKEN']
+
+require 'net/http'
+require 'uri'
+
+uri = URI('https://api.twitter.com/2/tweets/search/recent?query=from:twitterdev')  # replace with your URL
+http = Net::HTTP.new(uri.host, uri.port)
+
+request = Net::HTTP::Get.new(uri.request_uri)
+request['Authorization'] = "Bearer #{ENV['BEARER_TOKEN']}"
+
+response = http.request(request)
+
+puts response.body
