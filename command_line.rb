@@ -1,13 +1,10 @@
 require 'tty-prompt'
 
 def search_linkedin(company, keyword)
-  puts "Searching LinkedIn..."
-    puts "Searching LinkedIn for posts from #{company} that feature references to the word #{keyword}"
+  puts "Searching LinkedIn for posts from #{company} that feature references to the word #{keyword}"
 end
 
 def search_twitter(company, keyword)
-  puts "Searching Twitter..."
-  # Add your Twitter search code here
   puts "Searching Twitter for posts from #{company} that feature references to the word #{keyword}"
 end
 
