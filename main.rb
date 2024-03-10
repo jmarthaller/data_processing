@@ -54,5 +54,6 @@ end
 # Do this for all member companies of the Data Coalition
 # Save that file in this directory
 
-api_key = ENV['API_KEY']
-api_key_secret = ENV['API_KEY_SECRET']
+# api_key = ENV['API_KEY']
+# api_key_secret = ENV['API_KEY_SECRET']
+# bearer_token = ENV['BEARER_TOKEN']
