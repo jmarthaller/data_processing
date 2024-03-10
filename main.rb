@@ -7,6 +7,8 @@ require 'nokogiri'
 require 'open-uri'
 require 'date'
 require 'selenium-webdriver'
+require 'dotenv'
+Dotenv.load
 
 def scrape_posts
   # scrape the linkedin page
@@ -41,8 +43,7 @@ def scrape_posts
   # quit the driver
   driver.quit
 end
-
-scrape_posts
+# scrape_posts
 
 
 
@@ -53,3 +54,5 @@ scrape_posts
 # Do this for all member companies of the Data Coalition
 # Save that file in this directory
 
+api_key = ENV['API_KEY']
+api_key_secret = ENV['API_KEY_SECRET']
