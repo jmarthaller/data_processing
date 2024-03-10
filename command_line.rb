@@ -1,13 +1,14 @@
 require 'tty-prompt'
 
-def search_linkedin
+def search_linkedin(company, keyword)
   puts "Searching LinkedIn..."
-  # Add your LinkedIn search code here
+    puts "Searching LinkedIn for posts from #{company} that feature references to the word #{keyword}"
 end
 
-def search_twitter
+def search_twitter(company, keyword)
   puts "Searching Twitter..."
   # Add your Twitter search code here
+  puts "Searching Twitter for posts from #{company} that feature references to the word #{keyword}"
 end
 
 def search_blogs
@@ -18,13 +19,21 @@ end
 prompt = TTY::Prompt.new
 
 loop do
-  user_choice = prompt.select("Choose your action?", %w(SearchLinkedIn SearchTwitter SearchCompanyBlogs Exit))
+  user_choice = prompt.select("Choose your action", %w(SearchLinkedIn SearchTwitter SearchCompanyBlogs Exit))
 
   case user_choice
   when 'SearchLinkedIn'
-    search_linkedin
+    puts "what company do you want to search for?"
+    company = gets.chomp
+    puts "what keyword do you want to search for?"
+    keyword = gets.chomp
+    search_linkedin(company, keyword)
   when 'SearchTwitter'
-    search_twitter
+    puts "what company do you want to search for?"
+    company = gets.chomp
+    puts "what keyword do you want to search for?"
+    keyword = gets.chomp
+    search_twitter(company, keyword)
   when 'SearchCompanyBlogs'
     search_blogs
   when 'Exit'

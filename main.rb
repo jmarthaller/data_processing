@@ -100,10 +100,10 @@ def search_tweets(user, word, bearer_token)
   base_url = 'https://api.twitter.com/2/tweets/search/recent'
   query = URI.encode_www_form('query' => "from:#{user} #{word}")
   url = URI("#{base_url}?#{query}")
-  require 'pry'; binding.pry
+
   request = Net::HTTP::Get.new(url)
   request['Authorization'] = "Bearer #{bearer_token}"
-  
+
   response = Net::HTTP.start(url.hostname, url.port, use_ssl: url.scheme == 'https') do |http|
     http.request(request)
   end
