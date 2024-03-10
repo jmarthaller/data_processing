@@ -16,22 +16,22 @@ end
 prompt = TTY::Prompt.new
 
 loop do
-  user_choice = prompt.select("Choose your action", %w(SearchLinkedIn SearchTwitter SearchCompanyBlogs Exit))
+  user_choice = prompt.select("Choose your action", %w(Search_LinkedIn Search_Twitter Search_Company_Blogs Exit))
 
   case user_choice
-  when 'SearchLinkedIn'
+  when 'Search_LinkedIn'
     puts "what company do you want to search for?"
     company = gets.chomp
     puts "what keyword do you want to search for?"
     keyword = gets.chomp
     search_linkedin(company, keyword)
-  when 'SearchTwitter'
+  when 'Search_Twitter'
     puts "what company do you want to search for?"
     company = gets.chomp
     puts "what keyword do you want to search for?"
     keyword = gets.chomp
     search_twitter(company, keyword)
-  when 'SearchCompanyBlogs'
+  when 'Search_Company_Blogs'
     search_blogs
   when 'Exit'
     break
